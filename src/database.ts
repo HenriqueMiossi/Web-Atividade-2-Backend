@@ -1,6 +1,6 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
-export async function createMovie(apiUrl: string) {
+export async function createReview(id: string, review: string) {
     const url = 'mongodb://localhost:27017';
     const client = new MongoClient(url);
 
@@ -9,8 +9,14 @@ export async function createMovie(apiUrl: string) {
 
         const db = client.db('reviewer');
         const collection = db.collection('movies');
-
-        await collection.insertOne({ "url": apiUrl });
+        
+        if (await collection.findOne({ "movieId": id }) == null) {
+            await collection.insertOne({ "movieId": id, "reviews": [] });
+            await collection.updateOne({ "movieId": id }, { $push: { "reviews": review } });
+        }
+        else {
+            await collection.updateOne({ "movieId": id }, { $push: { "reviews": review } });
+        }
     } catch (e) {
         console.error(e);
     } finally {
