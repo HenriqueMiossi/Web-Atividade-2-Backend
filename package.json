@@ -4,7 +4,9 @@
     "start": "ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts"
   },
   "dependencies": {
+    "@types/cors": "^2.8.12",
     "@types/mongodb": "^4.0.7",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongodb": "^4.1.4"
   },

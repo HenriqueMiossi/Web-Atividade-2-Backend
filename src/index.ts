@@ -1,8 +1,12 @@
 import express from 'express';
+import cors from 'cors';
 
 import { createReview, getMovies } from './database';
 
 const app = express();
+
+app.use(express.json());
+app.use(cors());
 
 app.get('/movies', async (request, response) => {
     // await createMovie('Joesley');
@@ -13,7 +17,8 @@ app.get('/movies', async (request, response) => {
 });
 
 app.post('/movies/:id', async (request, response) => {
-    await createReview(request.params.id, 'josnei');
+    const review: string = request.body.review;
+    await createReview(request.params.id, review);
 
     return response.status(200).send();
 });
