@@ -24,7 +24,7 @@ export async function createReview(id: string, review: string) {
     }
 }
 
-export async function getMovies() {
+export async function getMovies(id: string) {
     const url = 'mongodb://localhost:27017';
     const client = new MongoClient(url);
 
@@ -34,7 +34,7 @@ export async function getMovies() {
         const db = client.db('reviewer');
         const collection = db.collection('movies');
 
-        return await collection.find({}).toArray();
+        return await collection.findOne({ "movieId": id });
     } catch (e) {
         console.error(e);
     } finally {

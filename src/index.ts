@@ -8,10 +8,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get('/movies', async (request, response) => {
-    // await createMovie('Joesley');
-    // await createMovie('Josnei');
-    const movies = await getMovies();
+app.get('/movies/:id', async (request, response) => {
+    const movies = await getMovies(request.params.id);
 
     return response.json(movies);
 });
